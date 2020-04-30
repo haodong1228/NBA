@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.qs.mapper.PlayerMapper" >
+  <resultMap id="BaseResultMap" type="cn.qs.bean.Player" >
+    <id column="player_id" property="playerId" jdbcType="VARCHAR" />
+    <result column="team_id" property="teamId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="VARCHAR" />
+    <result column="birth" property="birth" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="contract" property="contract" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="salary" property="salary" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="Penalty_shot" property="penaltyShot" jdbcType="VARCHAR" />
+    <result column="ps_hit_rate" property="psHitRate" jdbcType="VARCHAR" />
+    <result column="three" property="three" jdbcType="VARCHAR" />
+    <result column="three_hit_rate" property="threeHitRate" jdbcType="VARCHAR" />
+    <result column="shoot" property="shoot" jdbcType="VARCHAR" />
+    <result column="shoot_hit_rate" property="shootHitRate" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="backboard" property="backboard" jdbcType="VARCHAR" />
+    <result column="block_shot" property="blockShot" jdbcType="VARCHAR" />
+    <result column="steals" property="steals" jdbcType="VARCHAR" />
+    <result column="error" property="error" jdbcType="VARCHAR" />
+    <result column="break_rules" property="breakRules" jdbcType="VARCHAR" />
+    <result column="play_round" property="playRound" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    player_id, team_id, name, weight, height, birth, country, contract, school, salary, 
+    number, location, Penalty_shot, ps_hit_rate, three, three_hit_rate, shoot, shoot_hit_rate, 
+    time, backboard, block_shot, steals, error, break_rules, play_round, score, remark1, 
+    remark2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.qs.bean.PlayerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from player
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from player
+    where player_id = #{playerId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from player
+    where player_id = #{playerId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.qs.bean.PlayerExample" >
+    delete from player
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.qs.bean.Player" >
+    insert into player (player_id, team_id, name, 
+      weight, height, birth, 
+      country, contract, school, 
+      salary, number, location, 
+      Penalty_shot, ps_hit_rate, three, 
+      three_hit_rate, shoot, shoot_hit_rate, 
+      time, backboard, block_shot, 
+      steals, error, break_rules, 
+      play_round, score, remark1, 
+      remark2)
+    values (#{playerId,jdbcType=VARCHAR}, #{teamId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{weight,jdbcType=VARCHAR}, #{height,jdbcType=VARCHAR}, #{birth,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{contract,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{salary,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
+      #{penaltyShot,jdbcType=VARCHAR}, #{psHitRate,jdbcType=VARCHAR}, #{three,jdbcType=VARCHAR}, 
+      #{threeHitRate,jdbcType=VARCHAR}, #{shoot,jdbcType=VARCHAR}, #{shootHitRate,jdbcType=VARCHAR}, 
+      #{time,jdbcType=VARCHAR}, #{backboard,jdbcType=VARCHAR}, #{blockShot,jdbcType=VARCHAR}, 
+      #{steals,jdbcType=VARCHAR}, #{error,jdbcType=VARCHAR}, #{breakRules,jdbcType=VARCHAR}, 
+      #{playRound,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.qs.bean.Player" >
+    insert into player
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="playerId != null" >
+        player_id,
+      </if>
+      <if test="teamId != null" >
+        team_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="birth != null" >
+        birth,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="contract != null" >
+        contract,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="salary != null" >
+        salary,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="penaltyShot != null" >
+        Penalty_shot,
+      </if>
+      <if test="psHitRate != null" >
+        ps_hit_rate,
+      </if>
+      <if test="three != null" >
+        three,
+      </if>
+      <if test="threeHitRate != null" >
+        three_hit_rate,
+      </if>
+      <if test="shoot != null" >
+        shoot,
+      </if>
+      <if test="shootHitRate != null" >
+        shoot_hit_rate,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="backboard != null" >
+        backboard,
+      </if>
+      <if test="blockShot != null" >
+        block_shot,
+      </if>
+      <if test="steals != null" >
+        steals,
+      </if>
+      <if test="error != null" >
+        error,
+      </if>
+      <if test="breakRules != null" >
+        break_rules,
+      </if>
+      <if test="playRound != null" >
+        play_round,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="playerId != null" >
+        #{playerId,jdbcType=VARCHAR},
+      </if>
+      <if test="teamId != null" >
+        #{teamId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null" >
+        #{birth,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="contract != null" >
+        #{contract,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        #{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="penaltyShot != null" >
+        #{penaltyShot,jdbcType=VARCHAR},
+      </if>
+      <if test="psHitRate != null" >
+        #{psHitRate,jdbcType=VARCHAR},
+      </if>
+      <if test="three != null" >
+        #{three,jdbcType=VARCHAR},
+      </if>
+      <if test="threeHitRate != null" >
+        #{threeHitRate,jdbcType=VARCHAR},
+      </if>
+      <if test="shoot != null" >
+        #{shoot,jdbcType=VARCHAR},
+      </if>
+      <if test="shootHitRate != null" >
+        #{shootHitRate,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="backboard != null" >
+        #{backboard,jdbcType=VARCHAR},
+      </if>
+      <if test="blockShot != null" >
+        #{blockShot,jdbcType=VARCHAR},
+      </if>
+      <if test="steals != null" >
+        #{steals,jdbcType=VARCHAR},
+      </if>
+      <if test="error != null" >
+        #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="breakRules != null" >
+        #{breakRules,jdbcType=VARCHAR},
+      </if>
+      <if test="playRound != null" >
+        #{playRound,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.qs.bean.PlayerExample" resultType="java.lang.Integer" >
+    select count(*) from player
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update player
+    <set >
+      <if test="record.playerId != null" >
+        player_id = #{record.playerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamId != null" >
+        team_id = #{record.teamId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null" >
+        height = #{record.height,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birth != null" >
+        birth = #{record.birth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contract != null" >
+        contract = #{record.contract,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null" >
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salary != null" >
+        salary = #{record.salary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null" >
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.penaltyShot != null" >
+        Penalty_shot = #{record.penaltyShot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.psHitRate != null" >
+        ps_hit_rate = #{record.psHitRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.three != null" >
+        three = #{record.three,jdbcType=VARCHAR},
+      </if>
+      <if test="record.threeHitRate != null" >
+        three_hit_rate = #{record.threeHitRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shoot != null" >
+        shoot = #{record.shoot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shootHitRate != null" >
+        shoot_hit_rate = #{record.shootHitRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backboard != null" >
+        backboard = #{record.backboard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blockShot != null" >
+        block_shot = #{record.blockShot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.steals != null" >
+        steals = #{record.steals,jdbcType=VARCHAR},
+      </if>
+      <if test="record.error != null" >
+        error = #{record.error,jdbcType=VARCHAR},
+      </if>
+      <if test="record.breakRules != null" >
+        break_rules = #{record.breakRules,jdbcType=VARCHAR},
+      </if>
+      <if test="record.playRound != null" >
+        play_round = #{record.playRound,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null" >
+        score = #{record.score,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark1 != null" >
+        remark1 = #{record.remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark2 != null" >
+        remark2 = #{record.remark2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update player
+    set player_id = #{record.playerId,jdbcType=VARCHAR},
+      team_id = #{record.teamId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      weight = #{record.weight,jdbcType=VARCHAR},
+      height = #{record.height,jdbcType=VARCHAR},
+      birth = #{record.birth,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      contract = #{record.contract,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      salary = #{record.salary,jdbcType=VARCHAR},
+      number = #{record.number,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      Penalty_shot = #{record.penaltyShot,jdbcType=VARCHAR},
+      ps_hit_rate = #{record.psHitRate,jdbcType=VARCHAR},
+      three = #{record.three,jdbcType=VARCHAR},
+      three_hit_rate = #{record.threeHitRate,jdbcType=VARCHAR},
+      shoot = #{record.shoot,jdbcType=VARCHAR},
+      shoot_hit_rate = #{record.shootHitRate,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=VARCHAR},
+      backboard = #{record.backboard,jdbcType=VARCHAR},
+      block_shot = #{record.blockShot,jdbcType=VARCHAR},
+      steals = #{record.steals,jdbcType=VARCHAR},
+      error = #{record.error,jdbcType=VARCHAR},
+      break_rules = #{record.breakRules,jdbcType=VARCHAR},
+      play_round = #{record.playRound,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=VARCHAR},
+      remark1 = #{record.remark1,jdbcType=VARCHAR},
+      remark2 = #{record.remark2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.qs.bean.Player" >
+    update player
+    <set >
+      <if test="teamId != null" >
+        team_id = #{teamId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null" >
+        birth = #{birth,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="contract != null" >
+        contract = #{contract,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        salary = #{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="penaltyShot != null" >
+        Penalty_shot = #{penaltyShot,jdbcType=VARCHAR},
+      </if>
+      <if test="psHitRate != null" >
+        ps_hit_rate = #{psHitRate,jdbcType=VARCHAR},
+      </if>
+      <if test="three != null" >
+        three = #{three,jdbcType=VARCHAR},
+      </if>
+      <if test="threeHitRate != null" >
+        three_hit_rate = #{threeHitRate,jdbcType=VARCHAR},
+      </if>
+      <if test="shoot != null" >
+        shoot = #{shoot,jdbcType=VARCHAR},
+      </if>
+      <if test="shootHitRate != null" >
+        shoot_hit_rate = #{shootHitRate,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="backboard != null" >
+        backboard = #{backboard,jdbcType=VARCHAR},
+      </if>
+      <if test="blockShot != null" >
+        block_shot = #{blockShot,jdbcType=VARCHAR},
+      </if>
+      <if test="steals != null" >
+        steals = #{steals,jdbcType=VARCHAR},
+      </if>
+      <if test="error != null" >
+        error = #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="breakRules != null" >
+        break_rules = #{breakRules,jdbcType=VARCHAR},
+      </if>
+      <if test="playRound != null" >
+        play_round = #{playRound,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where player_id = #{playerId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.qs.bean.Player" >
+    update player
+    set team_id = #{teamId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=VARCHAR},
+      height = #{height,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      contract = #{contract,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=VARCHAR},
+      number = #{number,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      Penalty_shot = #{penaltyShot,jdbcType=VARCHAR},
+      ps_hit_rate = #{psHitRate,jdbcType=VARCHAR},
+      three = #{three,jdbcType=VARCHAR},
+      three_hit_rate = #{threeHitRate,jdbcType=VARCHAR},
+      shoot = #{shoot,jdbcType=VARCHAR},
+      shoot_hit_rate = #{shootHitRate,jdbcType=VARCHAR},
+      time = #{time,jdbcType=VARCHAR},
+      backboard = #{backboard,jdbcType=VARCHAR},
+      block_shot = #{blockShot,jdbcType=VARCHAR},
+      steals = #{steals,jdbcType=VARCHAR},
+      error = #{error,jdbcType=VARCHAR},
+      break_rules = #{breakRules,jdbcType=VARCHAR},
+      play_round = #{playRound,jdbcType=VARCHAR},
+      score = #{score,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR}
+    where player_id = #{playerId,jdbcType=VARCHAR}
+  </update>
+</mapper>

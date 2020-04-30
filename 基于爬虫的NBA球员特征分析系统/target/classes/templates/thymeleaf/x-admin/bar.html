@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+
+<title>球员对照</title>
+
+<link rel="shortcut icon"
+	href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/ico/favicon.png'}" />
+
+<link
+	th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/font-awesome.min.css'}"
+	rel="stylesheet" />
+<link
+	th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/bootstrap.css'}"
+	rel="stylesheet" />
+<link
+	th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/carousel.css'}"
+	rel="stylesheet" />
+<link
+	th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/echartsHome.css'}"
+	rel="stylesheet" />
+
+<script
+	th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/example/www/js/echarts.js'}"></script>
+<script
+	th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/codemirror.js'}"></script>
+<script
+	th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/javascript.js'}"></script>
+<script type="text/javascript"
+	th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/PublicFunctions.js'}"></script>
+<script type="text/javascript"
+	th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/bar.js'}"></script>
+<script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/jquery.min.js'}"></script>
+<link
+	th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/codemirror.css'}"
+	rel="stylesheet" />
+<link
+	th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/monokai.css'}"
+	rel="stylesheet" />
+
+<style>
+.violetBtn:hover {
+	background: #e25d18;
+	cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+	<form id="queryradarForm">
+		<input type="hidden" name="player1" id="player1"/>
+		<input type="hidden" name="player2" id="player2"/>
+	</form>
+
+	<div class="container-fluid" style="height: 100%">
+		<div>
+
+
+			<div id="findplayerinfo" class="col-md-4" style="height: 100%;">
+				<div class="sidebar-nav">
+
+					<div class="well sidebar-nav" style="height: 180px;">
+						<div class="layui-row">
+							<form class="layui-form layui-col-md12 x-so" id="form1">
+								<input type="text" name="name" placeholder="请输入球员中文名"
+									autocomplete="off" class="layui-input btn-sm"
+									style="margin-left: 10%; width: 50%;" />
+								<button class="btn btn-sm btn-success" type="button"
+									style="width: 80px;" onclick="querybar1()">查 询</button>
+							</form>
+
+							<table id="checkplayertable1"
+								style="display: block; height: 120px; overflow-y: scroll; margin: 6px; margin-left: 30px; margin-right: 30px; padding-left: 20px;">
+								
+								<tr th:each="person:${players}" style="margin-left:20px;">
+									<td th:text="${person.name}" th:value="${person.playerId}"
+									th:id="${'-a'+person.playerId}" class="btn-sm violetBtn" onclick='checkedPlayer1(this)'></td>
+								</tr>
+
+							</table>
+
+						</div>
+
+					</div>
+					<div class="sidebar-nav" style="height: 30px;">
+						<a style="margin-left: 45%;">VS</a>
+					</div>
+					<div class="well sidebar-nav" style="height: 180px;">
+
+						<div class="layui-row">
+							<form class="layui-form layui-col-md12 x-so" id="form2">
+								<input type="text" name="name" placeholder="请输入球员中文名"
+									autocomplete="off" class="layui-input btn-sm"
+									style="margin-left: 10%; width: 50%;" />
+								<button class="btn btn-sm btn-success" type="button"
+									style="width: 80px;" onclick="querybar2()">查 询</button>
+							</form>
+
+							<table id="checkplayertable2"
+								style="display: block; height: 120px; overflow-y: scroll; margin: 6px; margin-left: 30px; margin-right: 30px; padding-left: 20px;">
+								
+								<tr th:each="person:${players}" style="margin-left:20px;">
+									<td th:text="${person.name}" th:value="${person.playerId}"
+									th:id="${'-b'+person.playerId}" class="btn-sm violetBtn" onclick='checkedPlayer2(this)'></td>
+								</tr>
+
+							</table>
+
+						</div>
+
+
+					</div>
+
+
+				</div>
+			</div>
+
+
+
+
+			<div id="sidebar-code" class="col-md-4" style="display: none;">
+				<div class="well sidebar-nav">
+					<div class="nav-header">
+						<a href="#" onclick="autoResize()"
+							class="glyphicon glyphicon-resize-full" id="icon-resize"></a>option
+					</div>
+					<textarea id="code" name="code">
+option = {
+    title : {
+        text: '科比和詹姆士',
+        subtext: '纯属虚构'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['科比','詹姆士']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data : ['得分','防守','组织','外线','内线','综合']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'科比',
+            type:'bar',
+            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7],
+           
+        },
+        {
+            name:'詹姆士',
+            type:'bar',
+            data:[0, 5.9, 9.0, 26.4, 28.7, 70.7],
+            
+        }
+        
+    ]
+};
+                    </textarea>
+				</div>
+				<!--/.well -->
+			</div>
+			<!--/span-->
+			<div id="graphic" class="col-md-8">
+				<div id="main" class="main"></div>
+				<div>
+					<button type="button" class="btn btn-sm btn-success"
+						onclick="refresh(true)" style="background-color:#00CC00;">刷 新</button>
+					<span class="text-primary">切换主题</span> <select id="theme-select"></select>
+
+					<span id='wrong-message' style="color: red"></span>
+				</div>
+			</div>
+			<!--/span-->
+		</div>
+		<!--/row-->
+
+	</div>
+	<!--/.fluid-container-->
+
+	
+	<script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/echartsHome.js'}"></script>
+	
+	<script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/jquery.min.js'}"></script>
+
+    <script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/bootstrap.min.js'}"></script>
+    <script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/echartsExample.js'}"></script>
+</body>
+</html>

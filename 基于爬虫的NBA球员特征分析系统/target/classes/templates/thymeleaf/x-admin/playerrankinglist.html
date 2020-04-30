@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="UTF-8"/>
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/static/x-admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/css/font.css'}"/>
+    <link rel="stylesheet" th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/css/xadmin.css'}"/>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/lib/layui/layui.all.js'}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/js/xadmin.js'}"></script>
+    
+    <!--自己写的JS  -->
+    <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/PublicFunctions.js'}"></script>
+    <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/playerrankinglist.js'}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body class="layui-anim layui-anim-up">
+    
+    <div class="x-body" style="padding-top:0px;">
+      <div >
+        <form class="layui-form layui-col-md12 x-so" id="queryPKLForm">
+          <!--隐藏当前页和页号-->
+          <input type="hidden" name="pageNum"/>
+          <input type="hidden" name="pageSize"/>
+          <input type="hidden" name="tiaojian"  id="tiaojian"/>
+  
+        </form>
+      </div>
+      	<button id="defen" onclick='changeColor(this)' class="layui-btn layui-btn-normal">得分</button>
+      	<button id="toulan" onclick='changeColor(this)' class="layui-btn layui-btn-normal">投篮</button>
+      	<button id="sanfen" onclick='changeColor(this)' class="layui-btn layui-btn-normal">三分</button>
+      	<button id="faqiu" onclick='changeColor(this)' class="layui-btn layui-btn-normal">罚球</button>
+      	<button id="lanban" onclick='changeColor(this)' class="layui-btn layui-btn-normal">篮板</button>
+      	<button id="shiwu" onclick='changeColor(this)' class="layui-btn layui-btn-normal">失误</button>
+      	<button id="gaimao" onclick='changeColor(this)' class="layui-btn layui-btn-normal">盖帽</button>
+      	<button id="qiangduan" onclick='changeColor(this)' class="layui-btn layui-btn-normal">抢断</button>
+      	
+        <span class="x-right" style="line-height:40px;">球员排行版</span>
+   
+      <table class="layui-table">
+        <thead>
+          <tr>
+            <th>排名</th>
+            <th>球员</th>
+            <!-- <th>球队</th> -->
+            <th>得分</th>
+            <th>篮板</th>
+            <th>抢断</th>
+            <th>盖帽</th>
+            <th>失误</th>
+            <th>投篮命中率</th>
+            <th>三分命中率</th>
+            <th>罚球命中率</th>
+            <th>场次</th>
+            <th>上场时间</th>
+            <th>操作</th>
+            
+            </tr>
+        </thead>
+        <tbody id="memberTbody">
+        </tbody>
+      </table>
+      
+     <!--分页-->
+        <div id="pageDiv"></div>
+     <!--end 分页-->
+
+    </div>
+  </body>
+</html>

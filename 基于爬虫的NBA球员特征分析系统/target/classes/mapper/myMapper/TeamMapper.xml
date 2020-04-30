@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.qs.mapper.player.MyTeamMapper">
+	
+	
+	<!-- 使用  map 插入数据 -->
+	<insert id="insertByMap" parameterType="map" >
+     insert into team
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teamId != null" >
+        team_id,
+      </if>
+      <if test="teamName != null" >
+        team_name,
+      </if>
+      <if test="intoTime != null" >
+        into_time,
+      </if>
+      <if test="homeCourt != null" >
+        home_court,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="coachId != null" >
+        coach_id,
+      </if>
+      <if test="coachName != null" >
+        coach_name,
+      </if>
+      <if test="background != null" >
+        background,
+      </if>
+      <if test="averageScore != null" >
+        Average_score,
+      </if>
+      <if test="averageAssists != null" >
+        Average_Assists,
+      </if>
+      <if test="averageBackboard != null" >
+        Average_backboard,
+      </if>
+      <if test="averageLoseScore != null" >
+        Average_lose_score,
+      </if>
+      <if test="averageError != null" >
+        Average_error,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teamId != null" >
+        #{teamId,jdbcType=VARCHAR},
+      </if>
+      <if test="teamName != null" >
+        #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="intoTime != null" >
+        #{intoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="homeCourt != null" >
+        #{homeCourt,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="coachId != null" >
+        #{coachId,jdbcType=VARCHAR},
+      </if>
+      <if test="coachName != null" >
+        #{coachName,jdbcType=VARCHAR},
+      </if>
+      <if test="background != null" >
+        #{background,jdbcType=VARCHAR},
+      </if>
+      <if test="averageScore != null" >
+        #{averageScore,jdbcType=VARCHAR},
+      </if>
+      <if test="averageAssists != null" >
+        #{averageAssists,jdbcType=VARCHAR},
+      </if>
+      <if test="averageBackboard != null" >
+        #{averageBackboard,jdbcType=VARCHAR},
+      </if>
+      <if test="averageLoseScore != null" >
+        #{averageLoseScore,jdbcType=VARCHAR},
+      </if>
+      <if test="averageError != null" >
+        #{averageError,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+	
+	
+</mapper> 
+
+
+

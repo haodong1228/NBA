@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.qs.mapper.TeamMapper" >
+  <resultMap id="BaseResultMap" type="cn.qs.bean.Team" >
+    <id column="team_id" property="teamId" jdbcType="VARCHAR" />
+    <result column="team_name" property="teamName" jdbcType="VARCHAR" />
+    <result column="into_time" property="intoTime" jdbcType="VARCHAR" />
+    <result column="home_court" property="homeCourt" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="coach_id" property="coachId" jdbcType="VARCHAR" />
+    <result column="coach_name" property="coachName" jdbcType="VARCHAR" />
+    <result column="background" property="background" jdbcType="VARCHAR" />
+    <result column="Average_score" property="averageScore" jdbcType="VARCHAR" />
+    <result column="Average_Assists" property="averageAssists" jdbcType="VARCHAR" />
+    <result column="Average_backboard" property="averageBackboard" jdbcType="VARCHAR" />
+    <result column="Average_lose_score" property="averageLoseScore" jdbcType="VARCHAR" />
+    <result column="Average_error" property="averageError" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    team_id, team_name, into_time, home_court, url, area, coach_id, coach_name, background, 
+    Average_score, Average_Assists, Average_backboard, Average_lose_score, Average_error, 
+    remark1, remark2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.qs.bean.TeamExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from team
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from team
+    where team_id = #{teamId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from team
+    where team_id = #{teamId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.qs.bean.TeamExample" >
+    delete from team
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.qs.bean.Team" >
+    insert into team (team_id, team_name, into_time, 
+      home_court, url, area, 
+      coach_id, coach_name, background, 
+      Average_score, Average_Assists, Average_backboard, 
+      Average_lose_score, Average_error, remark1, 
+      remark2)
+    values (#{teamId,jdbcType=VARCHAR}, #{teamName,jdbcType=VARCHAR}, #{intoTime,jdbcType=VARCHAR}, 
+      #{homeCourt,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{coachId,jdbcType=VARCHAR}, #{coachName,jdbcType=VARCHAR}, #{background,jdbcType=VARCHAR}, 
+      #{averageScore,jdbcType=VARCHAR}, #{averageAssists,jdbcType=VARCHAR}, #{averageBackboard,jdbcType=VARCHAR}, 
+      #{averageLoseScore,jdbcType=VARCHAR}, #{averageError,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.qs.bean.Team" >
+    insert into team
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teamId != null" >
+        team_id,
+      </if>
+      <if test="teamName != null" >
+        team_name,
+      </if>
+      <if test="intoTime != null" >
+        into_time,
+      </if>
+      <if test="homeCourt != null" >
+        home_court,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="coachId != null" >
+        coach_id,
+      </if>
+      <if test="coachName != null" >
+        coach_name,
+      </if>
+      <if test="background != null" >
+        background,
+      </if>
+      <if test="averageScore != null" >
+        Average_score,
+      </if>
+      <if test="averageAssists != null" >
+        Average_Assists,
+      </if>
+      <if test="averageBackboard != null" >
+        Average_backboard,
+      </if>
+      <if test="averageLoseScore != null" >
+        Average_lose_score,
+      </if>
+      <if test="averageError != null" >
+        Average_error,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teamId != null" >
+        #{teamId,jdbcType=VARCHAR},
+      </if>
+      <if test="teamName != null" >
+        #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="intoTime != null" >
+        #{intoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="homeCourt != null" >
+        #{homeCourt,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="coachId != null" >
+        #{coachId,jdbcType=VARCHAR},
+      </if>
+      <if test="coachName != null" >
+        #{coachName,jdbcType=VARCHAR},
+      </if>
+      <if test="background != null" >
+        #{background,jdbcType=VARCHAR},
+      </if>
+      <if test="averageScore != null" >
+        #{averageScore,jdbcType=VARCHAR},
+      </if>
+      <if test="averageAssists != null" >
+        #{averageAssists,jdbcType=VARCHAR},
+      </if>
+      <if test="averageBackboard != null" >
+        #{averageBackboard,jdbcType=VARCHAR},
+      </if>
+      <if test="averageLoseScore != null" >
+        #{averageLoseScore,jdbcType=VARCHAR},
+      </if>
+      <if test="averageError != null" >
+        #{averageError,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.qs.bean.TeamExample" resultType="java.lang.Integer" >
+    select count(*) from team
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update team
+    <set >
+      <if test="record.teamId != null" >
+        team_id = #{record.teamId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamName != null" >
+        team_name = #{record.teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intoTime != null" >
+        into_time = #{record.intoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homeCourt != null" >
+        home_court = #{record.homeCourt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coachId != null" >
+        coach_id = #{record.coachId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coachName != null" >
+        coach_name = #{record.coachName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.background != null" >
+        background = #{record.background,jdbcType=VARCHAR},
+      </if>
+      <if test="record.averageScore != null" >
+        Average_score = #{record.averageScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.averageAssists != null" >
+        Average_Assists = #{record.averageAssists,jdbcType=VARCHAR},
+      </if>
+      <if test="record.averageBackboard != null" >
+        Average_backboard = #{record.averageBackboard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.averageLoseScore != null" >
+        Average_lose_score = #{record.averageLoseScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.averageError != null" >
+        Average_error = #{record.averageError,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark1 != null" >
+        remark1 = #{record.remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark2 != null" >
+        remark2 = #{record.remark2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update team
+    set team_id = #{record.teamId,jdbcType=VARCHAR},
+      team_name = #{record.teamName,jdbcType=VARCHAR},
+      into_time = #{record.intoTime,jdbcType=VARCHAR},
+      home_court = #{record.homeCourt,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      coach_id = #{record.coachId,jdbcType=VARCHAR},
+      coach_name = #{record.coachName,jdbcType=VARCHAR},
+      background = #{record.background,jdbcType=VARCHAR},
+      Average_score = #{record.averageScore,jdbcType=VARCHAR},
+      Average_Assists = #{record.averageAssists,jdbcType=VARCHAR},
+      Average_backboard = #{record.averageBackboard,jdbcType=VARCHAR},
+      Average_lose_score = #{record.averageLoseScore,jdbcType=VARCHAR},
+      Average_error = #{record.averageError,jdbcType=VARCHAR},
+      remark1 = #{record.remark1,jdbcType=VARCHAR},
+      remark2 = #{record.remark2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.qs.bean.Team" >
+    update team
+    <set >
+      <if test="teamName != null" >
+        team_name = #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="intoTime != null" >
+        into_time = #{intoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="homeCourt != null" >
+        home_court = #{homeCourt,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="coachId != null" >
+        coach_id = #{coachId,jdbcType=VARCHAR},
+      </if>
+      <if test="coachName != null" >
+        coach_name = #{coachName,jdbcType=VARCHAR},
+      </if>
+      <if test="background != null" >
+        background = #{background,jdbcType=VARCHAR},
+      </if>
+      <if test="averageScore != null" >
+        Average_score = #{averageScore,jdbcType=VARCHAR},
+      </if>
+      <if test="averageAssists != null" >
+        Average_Assists = #{averageAssists,jdbcType=VARCHAR},
+      </if>
+      <if test="averageBackboard != null" >
+        Average_backboard = #{averageBackboard,jdbcType=VARCHAR},
+      </if>
+      <if test="averageLoseScore != null" >
+        Average_lose_score = #{averageLoseScore,jdbcType=VARCHAR},
+      </if>
+      <if test="averageError != null" >
+        Average_error = #{averageError,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where team_id = #{teamId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.qs.bean.Team" >
+    update team
+    set team_name = #{teamName,jdbcType=VARCHAR},
+      into_time = #{intoTime,jdbcType=VARCHAR},
+      home_court = #{homeCourt,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      coach_id = #{coachId,jdbcType=VARCHAR},
+      coach_name = #{coachName,jdbcType=VARCHAR},
+      background = #{background,jdbcType=VARCHAR},
+      Average_score = #{averageScore,jdbcType=VARCHAR},
+      Average_Assists = #{averageAssists,jdbcType=VARCHAR},
+      Average_backboard = #{averageBackboard,jdbcType=VARCHAR},
+      Average_lose_score = #{averageLoseScore,jdbcType=VARCHAR},
+      Average_error = #{averageError,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR}
+    where team_id = #{teamId,jdbcType=VARCHAR}
+  </update>
+</mapper>

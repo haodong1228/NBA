@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>六芒星</title>
+    <link rel="shortcut icon" th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/ico/favicon.png'}" />
+    <link th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/font-awesome.min.css'}" rel="stylesheet" />
+    <link th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/bootstrap.css'}" rel="stylesheet" />
+    <link th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/carousel.css'}" rel="stylesheet" />
+    <link th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/echartsHome.css'}" rel="stylesheet" />
+    <script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/example/www/js/echarts.js'}"></script>
+    <script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/codemirror.js'}"></script>
+    <script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao./asset/js/javascript.js'}"></script>
+    <link th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/codemirror.css'}" rel="stylesheet" />
+    <link th:href="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/css/monokai.css'}" rel="stylesheet" />
+    <script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/jquery.min.js'}"></script>
+    <script type="text/javascript"
+	th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/PublicFunctions.js'}"></script>
+	<script type="text/javascript"
+	th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/radar.js'}"></script>
+    
+    	<style>
+		.violetBtn:hover{
+                background: #e25d18;
+                cursor:pointer;
+            }
+	</style>
+	
+
+
+	
+	
+</head>
+
+<body>
+    <div class="container-fluid" style="height:100%" id="all">
+        <div >
+        
+        
+        
+        <div id="findplayerinfo" class="col-md-4" style="height: 100%;">
+				<div class="sidebar-nav">
+
+					<div class="well sidebar-nav" style="height: 360px;">
+						<div class="layui-row">
+							<form class="layui-form layui-col-md12 x-so" id="queryradarForm">
+								<input type="text" name="name"
+									placeholder="请输入球员中文名" autocomplete="off" class="layui-input btn-sm"
+									style="margin-left: 10%;width:50%;" />
+								<button class="btn btn-sm btn-success" type="button" style="width:80px;" onclick="queryradaar()" >
+									  查   询 
+								</button>
+								<input type="hidden"  name="playerid" id="playerid"/>
+								<input type="hidden" th:value="${maxsorce}" name="maxsorce" id="maxsorce"/>
+								<input type="hidden" th:value="${maxdefen}" name="maxdefen" id="maxdefen"/>
+								<input type="hidden" th:value="${maxfangshou}" name="maxfangshou" id="maxfangshou"/>
+								<input type="hidden" th:value="${maxzuzhi}" name="maxzuzhi" id="maxzuzhi"/>
+								<input type="hidden" th:value="${maxwaixian}" name="maxwaixian" id="maxwaixian"/>
+								<input type="hidden" th:value="${maxneixian}" name="maxneixian" id="maxneixian"/>
+								<input type="hidden" th:value="${maxzonghe}" name="maxzonghe" id="maxzonghe"/>
+							</form>
+							
+							<table id="checkplayertable1" style="display: block;height: 280px;overflow-y: scroll;margin:6px;margin-left:30px;margin-right:30px;padding-left:20px;">
+								
+								<tr th:each="person:${players}" style="margin-left:20px;">
+									<td th:text="${person.name}" th:value="${person.playerId}"
+									th:id="${person.playerId}" class="btn-sm violetBtn" onclick='checkedPlayer1(this)'></td>
+								</tr>
+							</table>
+							
+						</div>
+
+					</div>
+					
+
+
+				</div>
+			</div>
+			
+            <div id="sidebar-code" class="col-md-4" style="display:none;">
+                <div class="well sidebar-nav" id="">
+                   
+                    <textarea id="code" name="code" >
+option = {
+    title : {
+        text: '科比',
+        subtext: '完全实况球员数据'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        x : 'center',
+        data:['科比']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    polar : [
+        {
+            indicator : [
+                {text : '得分', max  : 100},
+                {text : '防守', max  : 100},
+                {text : '组织', max  : 100},
+                {text : '外线', max  : 100},
+                {text : '内线', max  : 100},
+                {text : '综合', max  : 100}
+            ],
+            radius : 130
+        }
+    ],
+    series : [
+        {
+            name: '完全实况球员数据',
+            type: 'radar',
+            itemStyle: {
+                normal: {
+                    areaStyle: {
+                        type: 'default'
+                    }
+                }
+            },
+            data : [
+                {
+                    value : [99, 90, 89, 83, 88, 90],
+                    name : '科比'
+                }
+            ]
+        }
+    ]
+};
+                    </textarea>
+              </div><!--/.well -->
+            </div><!--/span-->
+
+            <div id="graphic" class="col-md-8">
+                <div id="main" class="main"></div>
+                <div >
+                    <button type="button" class="btn btn-sm btn-success" style="margin-left:20%;background-color:#00CC00;" onclick="refresh(true)">刷 新</button>
+                    <span class="text-primary">切换主题</span>
+                    <select id="theme-select"></select>
+
+                    <span id='wrong-message' style="color:red"></span>
+                </div>
+            </div><!--/span-->
+        </div><!--/row-->
+        
+        </div><!--/.fluid-container-->
+
+
+    <script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/jquery.min.js'}"></script>
+
+    <script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/bootstrap.min.js'}"></script>
+    <script th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/tubiao/asset/js/echartsExample.js'}"></script>
+	
+</body>
+</html>

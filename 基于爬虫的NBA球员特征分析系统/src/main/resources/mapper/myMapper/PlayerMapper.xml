@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.qs.mapper.player.MyPlayerMapper">
+	<resultMap type="cn.qs.bean.Player" id="playerTeamDetail">
+
+		<id column="player_id" property="playerId" jdbcType="VARCHAR" />
+	    <result column="team_id" property="teamId" jdbcType="VARCHAR" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="weight" property="weight" jdbcType="VARCHAR" />
+	    <result column="height" property="height" jdbcType="VARCHAR" />
+	    <result column="birth" property="birth" jdbcType="VARCHAR" />
+	    <result column="country" property="country" jdbcType="VARCHAR" />
+	    <result column="contract" property="contract" jdbcType="VARCHAR" />
+	    <result column="school" property="school" jdbcType="VARCHAR" />
+	    <result column="salary" property="salary" jdbcType="VARCHAR" />
+	    <result column="number" property="number" jdbcType="VARCHAR" />
+	    <result column="location" property="location" jdbcType="VARCHAR" />
+	    <result column="Penalty_shot" property="penaltyShot" jdbcType="VARCHAR" />
+	    <result column="ps_hit_rate" property="psHitRate" jdbcType="VARCHAR" />
+	    <result column="three" property="three" jdbcType="VARCHAR" />
+	    <result column="three_hit_rate" property="threeHitRate" jdbcType="VARCHAR" />
+	    <result column="shoot" property="shoot" jdbcType="VARCHAR" />
+	    <result column="shoot_hit_rate" property="shootHitRate" jdbcType="VARCHAR" />
+	    <result column="time" property="time" jdbcType="VARCHAR" />
+	    <result column="backboard" property="backboard" jdbcType="VARCHAR" />
+	    <result column="block_shot" property="blockShot" jdbcType="VARCHAR" />
+	    <result column="steals" property="steals" jdbcType="VARCHAR" />
+	    <result column="error" property="error" jdbcType="VARCHAR" />
+	    <result column="break_rules" property="breakRules" jdbcType="VARCHAR" />
+	    <result column="play_round" property="playRound" jdbcType="VARCHAR" />
+	    <result column="score" property="score" jdbcType="VARCHAR" />
+	    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+	    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+		
+		<!-- association ：配置一对一属性 -->
+
+		<!-- property:Player里面的Team属性名 -->
+
+		<!-- javaType:属性类型 -->
+
+		<association property="team" javaType="cn.qs.bean.Team">
+			<!-- id:声明主键，表示team_id是关联查询对象的唯一标识 -->
+			<id column="team_id" property="teamId" jdbcType="VARCHAR" />
+		    <result column="team_name" property="teamName" jdbcType="VARCHAR" />
+		    <result column="into_time" property="intoTime" jdbcType="VARCHAR" />
+		    <result column="home_court" property="homeCourt" jdbcType="VARCHAR" />
+		    <result column="url" property="url" jdbcType="VARCHAR" />
+		    <result column="area" property="area" jdbcType="VARCHAR" />
+		    <result column="coach_id" property="coachId" jdbcType="VARCHAR" />
+		    <result column="coach_name" property="coachName" jdbcType="VARCHAR" />
+		    <result column="background" property="background" jdbcType="VARCHAR" />
+		    <result column="Average_score" property="averageScore" jdbcType="VARCHAR" />
+		    <result column="Average_Assists" property="averageAssists" jdbcType="VARCHAR" />
+		    <result column="Average_backboard" property="averageBackboard" jdbcType="VARCHAR" />
+		    <result column="Average_lose_score" property="averageLoseScore" jdbcType="VARCHAR" />
+		    <result column="Average_error" property="averageError" jdbcType="VARCHAR" />
+		    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+		    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+		</association>
+
+	</resultMap>
+
+	<!-- 一对一关联 --> 
+	<select id="selectPlayersByMap" resultMap="playerTeamDetail" parameterType="Map">
+		 select * from player
+		 left join team 
+		 on player.team_id = team.team_id
+		 <where>
+		 	<if test="playerId!=null and playerId!=''">
+		 		player.player_id = #{playerId}
+		 	</if>
+		 	<if test="name!=null and name!=''">
+		 		player.name LIKE CONCAT(CONCAT('%', #{name}),'%') 
+		 	</if>
+		 </where>
+		 order by ${column}*1 desc
+	</select>
+	
+	<select id="selectMaxDataFromPlayer" resultType="Map">
+		select MAX(score*1) as maxs,MAX(block_shot*1) as maxf,MAX(remark1*1) as maxz from player;
+	</select>
+	
+	<!-- 使用 map 插入数据 -->
+	<insert id="insertByMap" parameterType="map">
+		insert into player
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="playerId != null">
+				player_id,
+			</if>
+			<if test="teamId != null">
+				team_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="weight != null">
+				weight,
+			</if>
+			<if test="height != null">
+				height,
+			</if>
+			<if test="birth != null">
+				birth,
+			</if>
+			<if test="country != null">
+				country,
+			</if>
+			<if test="contract != null">
+				contract,
+			</if>
+			<if test="school != null">
+				school,
+			</if>
+			<if test="salary != null">
+				salary,
+			</if>
+			<if test="number != null">
+				number,
+			</if>
+			<if test="location != null">
+				location,
+			</if>
+			<if test="penaltyShot != null">
+				Penalty_shot,
+			</if>
+			<if test="psHitRate != null">
+				ps_hit_rate,
+			</if>
+			<if test="three != null">
+				three,
+			</if>
+			<if test="threeHitRate != null">
+				three_hit_rate,
+			</if>
+			<if test="shoot != null">
+				shoot,
+			</if>
+			<if test="shootHitRate != null">
+				shoot_hit_rate,
+			</if>
+			<if test="time != null">
+				time,
+			</if>
+			<if test="backboard != null">
+				backboard,
+			</if>
+			<if test="blockShot != null">
+				block_shot,
+			</if>
+			<if test="steals != null">
+				steals,
+			</if>
+			<if test="error != null">
+				error,
+			</if>
+			<if test="breakRules != null">
+				break_rules,
+			</if>
+			<if test="playRound != null">
+				play_round,
+			</if>
+			<if test="score != null">
+				score,
+			</if>
+			<if test="remark1 != null">
+				remark1,
+			</if>
+			<if test="remark2 != null">
+				remark2,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="playerId != null">
+				#{playerId,jdbcType=VARCHAR},
+			</if>
+			<if test="teamId != null">
+				#{teamId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="weight != null">
+				#{weight,jdbcType=VARCHAR},
+			</if>
+			<if test="height != null">
+				#{height,jdbcType=VARCHAR},
+			</if>
+			<if test="birth != null">
+				#{birth,jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				#{country,jdbcType=VARCHAR},
+			</if>
+			<if test="contract != null">
+				#{contract,jdbcType=VARCHAR},
+			</if>
+			<if test="school != null">
+				#{school,jdbcType=VARCHAR},
+			</if>
+			<if test="salary != null">
+				#{salary,jdbcType=VARCHAR},
+			</if>
+			<if test="number != null">
+				#{number,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				#{location,jdbcType=VARCHAR},
+			</if>
+			<if test="penaltyShot != null">
+				#{penaltyShot,jdbcType=VARCHAR},
+			</if>
+			<if test="psHitRate != null">
+				#{psHitRate,jdbcType=VARCHAR},
+			</if>
+			<if test="three != null">
+				#{three,jdbcType=VARCHAR},
+			</if>
+			<if test="threeHitRate != null">
+				#{threeHitRate,jdbcType=VARCHAR},
+			</if>
+			<if test="shoot != null">
+				#{shoot,jdbcType=VARCHAR},
+			</if>
+			<if test="shootHitRate != null">
+				#{shootHitRate,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				#{time,jdbcType=VARCHAR},
+			</if>
+			<if test="backboard != null">
+				#{backboard,jdbcType=VARCHAR},
+			</if>
+			<if test="blockShot != null">
+				#{blockShot,jdbcType=VARCHAR},
+			</if>
+			<if test="steals != null">
+				#{steals,jdbcType=VARCHAR},
+			</if>
+			<if test="error != null">
+				#{error,jdbcType=VARCHAR},
+			</if>
+			<if test="breakRules != null">
+				#{breakRules,jdbcType=VARCHAR},
+			</if>
+			<if test="playRound != null">
+				#{playRound,jdbcType=VARCHAR},
+			</if>
+			<if test="score != null">
+				#{score,jdbcType=VARCHAR},
+			</if>
+			<if test="remark1 != null">
+				#{remark1,jdbcType=VARCHAR},
+			</if>
+			<if test="remark2 != null">
+				#{remark2,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="searchMarchingPlayer" parameterType="map" resultMap="playerTeamDetail">
+
+		SELECT DISTINCT * FROM player
+		WHERE ABS(score-#{score})=(SELECT MIN(ABS(score-#{score})) FROM player
+		WHERE ABS(backboard-#{backboard})=(SELECT MIN(ABS(backboard-#{backboard})) FROM player
+		where ABS(block_Shot-#{blockShot})=(SELECT MIN(ABS(block_Shot-#{blockShot})) FROM player
+		WHERE ABS(steals-#{steals})=(SELECT MIN(ABS(steals-#{steals})) FROM player
+		WHERE ABS(error-#{error})=(SELECT MIN(ABS(error-#{error})) FROM player
+		WHERE ABS(break_Rules-#{breakRules})=(SELECT MIN(ABS(break_Rules-#{breakRules})) FROM player
+		WHERE ABS(play_Round-#{playRound})=(SELECT MIN(ABS(play_Round-#{playRound})) FROM player
+		)))))))
+
+
+	</select>  
+		<select id="findPlayerInfos" resultMap="playerTeamDetail" parameterType="map">
+		 select * from player 
+		 <where>
+		  1=1
+		 	<if test="playerid!=null and playerid!=''">
+		 		and player_id = #{playerid}
+		 	</if>
+		 	<if test="name!=null and name!=''">
+		 		and player.name LIKE CONCAT(CONCAT('%', #{name}),'%') 
+		 	</if>
+		 </where>
+		
+	</select>
+	
+</mapper> 
+
+
+

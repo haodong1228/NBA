@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.qs.mapper.player.MyCoachMapper">
+	<resultMap type="cn.qs.bean.Coach" id="coachTeamDetail">
+
+
+		<id column="coach_id" property="coachId" jdbcType="VARCHAR" />
+	    <result column="team_id" property="teamId" jdbcType="VARCHAR" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="sex" property="sex" jdbcType="VARCHAR" />
+	    <result column="birth" property="birth" jdbcType="VARCHAR" />
+	    <result column="Personal_glory" property="personalGlory" jdbcType="VARCHAR" />
+	    <result column="background" property="background" jdbcType="VARCHAR" />
+	    <result column="teaching_score" property="teachingScore" jdbcType="VARCHAR" />
+	    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+	    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+		<!-- association ：配置一对一属性 -->
+
+		<!-- property:Coach里面的Team属性名 -->
+
+		<!-- javaType:属性类型 -->
+
+		<association property="team" javaType="cn.qs.bean.Team">
+			<!-- id:声明主键，表示team_id是关联查询对象的唯一标识 -->
+			<id column="team_id" property="teamId" jdbcType="VARCHAR" />
+		    <result column="team_name" property="teamName" jdbcType="VARCHAR" />
+		    <result column="into_time" property="intoTime" jdbcType="VARCHAR" />
+		    <result column="home_court" property="homeCourt" jdbcType="VARCHAR" />
+		    <result column="url" property="url" jdbcType="VARCHAR" />
+		    <result column="area" property="area" jdbcType="VARCHAR" />
+		    <result column="coach_id" property="coachId" jdbcType="VARCHAR" />
+		    <result column="coach_name" property="coachName" jdbcType="VARCHAR" />
+		    <result column="background" property="background" jdbcType="VARCHAR" />
+		    <result column="Average_score" property="averageScore" jdbcType="VARCHAR" />
+		    <result column="Average_Assists" property="averageAssists" jdbcType="VARCHAR" />
+		    <result column="Average_backboard" property="averageBackboard" jdbcType="VARCHAR" />
+		    <result column="Average_lose_score" property="averageLoseScore" jdbcType="VARCHAR" />
+		    <result column="Average_error" property="averageError" jdbcType="VARCHAR" />
+		    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+		    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+		</association>
+
+	</resultMap>
+
+	<!-- 一对一关联 --> 
+	<select id="selectCoachsByMap" resultMap="coachTeamDetail" parameterType="Map">
+		 select * from coach
+		 left join team 
+		 on coach.team_id = team.team_id
+		 <where>
+		 	<if test="coachId!=null and coachId!=''">
+		 		coach.coach_id = #{coachId}
+		 	</if>
+		 	<if test="name!=null and name!=''">
+		 		coach.name LIKE CONCAT(CONCAT('%', #{name}),'%') 
+		 	</if>
+		 </where>
+	</select> 
+</mapper> 
+
+
+
